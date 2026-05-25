@@ -1,0 +1,13 @@
+RewriteEngine on
+
+# Корень /
+RewriteRule ^$ web/index.php [L,QSA]
+
+# Статику из web/ отдаём напрямую (css, js, assets...)
+RewriteCond %{DOCUMENT_ROOT}/web%{REQUEST_URI} -f
+RewriteRule ^(.+)$ web/$1 [L]
+
+# Всё остальное → web/index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.+)$ web/index.php [L,QSA]
